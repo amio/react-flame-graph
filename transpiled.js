@@ -4,6 +4,31 @@ var _preact = require('preact');
 
 /** @jsx h */
 
+function onmouseover(e) {
+  if (e.target.tagName === 'svg') return;
+  var parentG = findParentG(e.target);
+
+  parentG.classList.add('hover');
+} // write ES2015 code and import modules from npm
+// and then press "Execute" to run your program
+
+function onmouseout(e) {
+  if (e.target.tagName === 'svg') return;
+  var parentG = findParentG(e.target);
+  parentG.classList.remove('hover');
+}
+
+function findParentG(el) {
+  switch (el.tagName) {
+    case 'g':
+      return el;
+    case 'svg':
+      return el;
+    default:
+      return findParentG(el.parentNode);
+  }
+}
+
 var Graph = function Graph(_ref) {
   var width = _ref.width;
   var height = _ref.height;
@@ -24,14 +49,15 @@ var Graph = function Graph(_ref) {
   return (0, _preact.h)(
     'svg',
     { 'class': 'flame-graph',
+      onmouseover: onmouseover,
+      onmouseout: onmouseout,
       width: width, height: height,
       viewBox: '0 0 ' + width + ' ' + height },
     (0, _preact.h)(Bar, { node: data,
       x: 0, y: startY, offsetY: offsetY,
-      width: width, height: barHeight, margin: barMargin })
+      width: width + barMargin, height: barHeight, margin: barMargin })
   );
-}; // write ES2015 code and import modules from npm
-// and then press "Execute" to run your program
+};
 
 var Bar = function Bar(_ref2) {
   var x = _ref2.x;
@@ -52,18 +78,17 @@ var Bar = function Bar(_ref2) {
       x: childX, y: -offsetY,
       width: childWidth, height: height });
   });
-  console.log(children ? children.length : 0);
   return (0, _preact.h)(
     'g',
     { 'class': 'bar', transform: pos,
       width: width, height: height },
-    children,
     (0, _preact.h)('rect', { width: width, height: height }),
     (0, _preact.h)(
       'text',
       { x: '2', y: '16', 'class': 'label' },
       node.name
-    )
+    ),
+    children
   );
 };
 

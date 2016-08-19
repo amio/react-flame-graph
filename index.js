@@ -4,6 +4,30 @@
 import { h, render, Component, svg, g } from 'preact';
 /** @jsx h */
 
+function onmouseover (e) {
+  if (e.target.tagName === 'svg') return
+  const parentG = findParentG(e.target)
+
+  parentG.classList.add('hover')
+}
+
+function onmouseout (e) {
+  if (e.target.tagName === 'svg') return
+  const parentG = findParentG(e.target)
+  parentG.classList.remove('hover')
+}
+
+function findParentG (el) {
+  switch (el.tagName) {
+    case 'g':
+      return el
+    case 'svg':
+      return el
+    default:
+      return findParentG(el.parentNode)
+  }
+}
+
 const Graph = ({
   width,
   height,
@@ -20,11 +44,13 @@ const Graph = ({
   }
   return (
     <svg class="flame-graph"
+      onmouseover={ onmouseover }
+      onmouseout={ onmouseout }
       width={ width } height={ height }
       viewBox={`0 0 ${ width } ${ height }`} >
       <Bar node={ data }
         x={ 0 } y={ startY } offsetY = { offsetY }
-        width={ width } height={ barHeight } margin={ barMargin } />
+        width={ width + barMargin } height={ barHeight } margin={ barMargin } />
     </svg>
   )
 }
@@ -50,13 +76,12 @@ const Bar = ({
         width={ childWidth } height={ height } />
     )
   })
-  console.log(children ? children.length : 0)
   return (
     <g class="bar" transform={ pos }
       width={ width } height={ height } >
-      { children }
       <rect width={ width } height={ height } />
       <text x="2" y="16" class="label">{node.name}</text>
+      { children }
     </g>
   )
 }
