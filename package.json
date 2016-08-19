@@ -1,0 +1,7 @@
+{
+  "name": "esnextbin-sketch",
+  "version": "0.0.0",
+  "dependencies": {
+    "preact": "5.4.1"
+  }
+}
