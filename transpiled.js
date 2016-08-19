@@ -9,6 +9,8 @@ function onmouseover(e) {
   var parentG = findParentG(e.target);
 
   parentG.classList.add('hover');
+  console.log(parentG.getAttribute('title'));
+  e.stopPropagation();
 } // write ES2015 code and import modules from npm
 // and then press "Execute" to run your program
 
@@ -59,6 +61,14 @@ var Graph = function Graph(_ref) {
   );
 };
 
+function barMouseover(e) {
+  // this.classList.add('hover')
+}
+
+function barMouseout(e) {
+  // this.classList.remove('hover')
+}
+
 var Bar = function Bar(_ref2) {
   var x = _ref2.x;
   var y = _ref2.y;
@@ -81,7 +91,9 @@ var Bar = function Bar(_ref2) {
   return (0, _preact.h)(
     'g',
     { 'class': 'bar', transform: pos,
-      width: width, height: height },
+      width: width, height: height,
+      title: node.name, value: node.value,
+      onmouseover: barMouseover, onmouseout: barMouseout },
     (0, _preact.h)('rect', { width: width, height: height }),
     (0, _preact.h)(
       'text',

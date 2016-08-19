@@ -9,6 +9,8 @@ function onmouseover (e) {
   const parentG = findParentG(e.target)
 
   parentG.classList.add('hover')
+  console.log(parentG.getAttribute('title'))
+  e.stopPropagation()
 }
 
 function onmouseout (e) {
@@ -55,6 +57,14 @@ const Graph = ({
   )
 }
 
+function barMouseover (e) {
+  // this.classList.add('hover')
+}
+
+function barMouseout (e) {
+  // this.classList.remove('hover')
+}
+
 const Bar = ({
   x,
   y,
@@ -78,9 +88,11 @@ const Bar = ({
   })
   return (
     <g class="bar" transform={ pos }
-      width={ width } height={ height } >
+      width={ width } height={ height }
+      title={ node.name } value={ node.value }
+      onmouseover={ barMouseover } onmouseout={ barMouseout }>
       <rect width={ width } height={ height } />
-      <text x="2" y="16" class="label">{node.name}</text>
+      <text x="2" y="16" class="label">{ node.name }</text>
       { children }
     </g>
   )
