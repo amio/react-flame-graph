@@ -9,8 +9,8 @@ function onmouseover (e) {
   const parentG = findParentG(e.target)
 
   parentG.classList.add('hover')
-  console.log(parentG.getAttribute('title'))
-  e.stopPropagation()
+  console.log(parentG.getAttribute('value'))
+  // e.stopPropagation()
 }
 
 function onmouseout (e) {
@@ -24,7 +24,7 @@ function findParentG (el) {
     case 'g':
       return el
     case 'svg':
-      return el
+      return undefined
     default:
       return findParentG(el.parentNode)
   }
@@ -57,14 +57,6 @@ const Graph = ({
   )
 }
 
-function barMouseover (e) {
-  // this.classList.add('hover')
-}
-
-function barMouseout (e) {
-  // this.classList.remove('hover')
-}
-
 const Bar = ({
   x,
   y,
@@ -89,17 +81,19 @@ const Bar = ({
   return (
     <g class="bar" transform={ pos }
       width={ width } height={ height }
-      title={ node.name } value={ node.value }
-      onmouseover={ barMouseover } onmouseout={ barMouseout }>
+      title={ node.name } value={ node.value } >
       <rect width={ width } height={ height } />
-      <text x="2" y="16" class="label">{ node.name }</text>
+      <text x="2" y="16" width={width} className="label">{ node.name }</text>
+      <foreignObject width={ width } height={ height }>
+        <div className="label">{ node.name }</div>
+      </foreignObject>
       { children }
     </g>
   )
 }
 
 render(
-  <Graph data={window.dataJSON} direction="up"
+  <Graph data={window.dataJSON} direction="down"
     width={ window.innerWidth } height="400" />,
   document.body
 )
