@@ -51,7 +51,7 @@ const Graph = ({
       width={ width } height={ height }
       viewBox={`0 0 ${ width } ${ height }`} >
       <Bar node={ data }
-        x={ 0 } y={ startY } offsetY = { offsetY }
+        x={ 0 } y={ startY } offsetY={ offsetY }
         width={ width + barMargin } height={ barHeight } margin={ barMargin } />
     </svg>
   )
@@ -67,15 +67,20 @@ const Bar = ({
   node
 }) => {
   const pos = `translate(${x}, ${y})`
+
   let childXPointer = 0
   const children = node.children && node.children.map(child => {
-    const childWidth = child.value / node.value * width - margin
+    let childWidth = child.value / node.value * width - margin
+    if (childWidth < 0) {
+      childWidth = 0
+    }
+
     const childX = childXPointer
     childXPointer = childXPointer + childWidth + margin
     return (
       <Bar node={ child }
-        x={ childX } y={ - offsetY }
-        width={ childWidth } height={ height } />
+        x={ childX } y={ - offsetY } offsetY={ offsetY }
+        width={ childWidth } height={ height } margin={ margin } />
     )
   })
   return (
