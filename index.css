@@ -1,0 +1,19 @@
+html { height: 100% }
+body {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  box-sizing: border-box;
+  padding: 3em;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+}
+
+#flame-graph {
+  flex: 1;
+}
+
+.bar { fill: #e76318; }
+.bar.hover { fill: #a45de4; }
+
+.label { fill: rgba(255,255,255,0.8); pointer-events: none; }

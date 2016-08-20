@@ -13,7 +13,7 @@ const Graph = ({
   let startY = height - barHeight
   let offsetY = barHeight + barMargin
   if (direction === 'down') {
-    startY = 1
+    startY = 0
     offsetY = -offsetY
   }
   return (
@@ -21,7 +21,7 @@ const Graph = ({
       onmouseover={ onmouseover }
       onmouseout={ onmouseout }
       width={ width } height={ height }
-      viewBox={`0 0 ${ width } ${ height }`} >
+      viewBox={`0 0 ${ width } ${ height }`} style="font-size: 14px" >
       <Bar node={ data }
         x={ 0 } y={ startY } offsetY={ offsetY }
         width={ width + barMargin } height={ barHeight } margin={ barMargin } />
