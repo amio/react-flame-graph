@@ -5,7 +5,7 @@
   "repository": "amio/react-flame",
   "scripts": {
     "build": "rollup -c",
-    "watch": "onchange 'index.*' -- npm run build"
+    "watch": "onchange 'index.*' 'src/**' -- npm run build"
   },
   "dependencies": {
     "preact": "5.4.1",
