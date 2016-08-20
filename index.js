@@ -95,5 +95,5 @@ const Bar = ({
 render(
   <Graph data={window.dataJSON} direction="down"
     width={ window.innerWidth } height="400" />,
-  document.body
+  document.getElementById('flame-graph')
 )
