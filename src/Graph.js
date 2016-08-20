@@ -1,5 +1,5 @@
 /** @jsx h */
-import { h, render, Component, svg, g } from 'preact'
+import { h } from 'preact'
 import Bar from './Bar.js'
 
 const Graph = ({
@@ -23,7 +23,7 @@ const Graph = ({
       width={ width } height={ height }
       viewBox={`0 0 ${ width } ${ height }`} style="font-size: 14px" >
       <Bar node={ data }
-        x={ 0 } y={ startY } offsetY={ offsetY }
+        x={ 0 } y={ startY } offsetY={ offsetY } charWidth={ 9 }
         width={ width + barMargin } height={ barHeight } margin={ barMargin } />
     </svg>
   )

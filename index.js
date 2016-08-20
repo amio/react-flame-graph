@@ -1,5 +1,5 @@
 /** @jsx h */
-import { h, render, Component, svg, g } from 'preact'
+import { h, render } from 'preact'
 import Graph from './src/Graph.js'
 
 const graphWrapper = document.getElementById('flame-graph')

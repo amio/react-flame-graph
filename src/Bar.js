@@ -1,5 +1,5 @@
-import { h, render, Component, svg, g } from 'preact';
 /** @jsx h */
+import { h } from 'preact'
 
 const Bar = ({
   x,
@@ -7,6 +7,7 @@ const Bar = ({
   width,
   height,
   offsetY,
+  charWidth,
   margin,
   node
 }) => {
@@ -21,22 +22,34 @@ const Bar = ({
     childXPointer = childXPointer + childWidth
     return (
       <Bar node={ child }
-        x={ childX } y={ -offsetY } offsetY={ offsetY }
+        x={ childX } y={ -offsetY } offsetY={ offsetY } charWidth={ charWidth }
         width={ childWidth } height={ height } margin={ margin } />
     )
   })
+
   return (
-    <g class="bar" transform={ `translate(${x}, ${y})` }
-      width={ width }
-      title={ node.name } value={ node.value } >
+    <g class="bar" transform={ `translate(${x}, ${y})` } width={ width } >
       <rect width={ width > margin ? width - margin : 0 } height={ height } />
-      <text x="2" y="16" width={width} className="label">{ node.name }</text>
-      <foreignObject width={ width } height={ height }>
-        <div className="label">{ node.name }</div>
-      </foreignObject>
+      { genLabel(node.name, width - margin, charWidth) }
       { children }
     </g>
   )
+}
+
+function genLabel (labelText, width, charWidth) {
+  const labelCharsWidth = Math.round((width - 8) / charWidth)
+
+  if (labelCharsWidth >= labelText.length) {
+    // output full labelText
+  } else if (labelCharsWidth > 2) {
+    // cut the length, add '…'
+    labelText = labelText.substr(0, labelCharsWidth - 1) + '…'
+  } else {
+    // no label
+    labelText = ''
+  }
+
+  return labelText && <text x="3" y="16" className="label">{ labelText }</text>
 }
 
 export default Bar
